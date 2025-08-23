@@ -13,25 +13,26 @@ last_change_time = {}
 # ====== CONFIG ======
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 AUTH_TOKEN = os.getenv("AUTH_TOKEN")
-GROUP_ID = int(os.getenv("GROUP_ID", -1002091416812))
+GROUP_ID = int(os.getenv("GROUP_ID", -1001926462756))
 API_URL = "https://raazit.acchub.io/api/"
 BASE_URL = "https://raazit.acchub.io/api/sms"
 FETCH_INTERVAL = 2  # seconds
-ADMIN_ID = int(os.getenv("ADMIN_ID", 6884253109)) 
-ADMIN_IDs = int(os.getenv("ADMIN_IDs", 7761576669))  ## Add admin ID for /hiden_25 command
+ADMIN_ID = int(os.getenv("ADMIN_ID", 7761576669)) 
+#ADMIN_IDs = int(os.getenv("ADMIN_IDs", 7761576669))  ## Add admin ID for /hiden_25 command
 #ADMIN_IDS = [int(id) for id in os.getenv("ADMIN_IDS", "7761576669", "6884253109").split(",")]
 DEV_LINK = os.getenv("DEV_LINK", "https://t.me/hiden_25")
 CHANNEL_LINK = os.getenv("CHANNEL_LINK", "https://t.me/+2P-OUmWo1hc0NmNh")
-Support = os.getenv("Support", "https://t.me/OpxAli")
+#Support = os.getenv("Support", "https://t.me/OpxAli")
 # Required channels for force join
 REQUIRED_CHANNELS = [
-    "@BlackHatsssss",
     #"@+UyoEvMS5XAxkNTc0",
     #"@+2P-OUmWo1hc0NmNh",
    # "@fasttech3",
     "@h2icoder",
     "@freeotpss"
 ]
+# Optional channel (just link, no force check)
+OPTIONAL_CHANNEL = "@+cJJcOipvAohmODBl"
 #channel2 = [ "@+F4Md7IotaqcxN2I9" ]
 # Store user IDs who have started the bot
 USER_IDS = set()
@@ -67,21 +68,28 @@ async def check_membership(user_id, context: ContextTypes.DEFAULT_TYPE):
 # ====== Function to Generate Join Channel Message ======
 def get_join_channel_message():
     keyboard = []
+
+    # 🔹 Optional channel सबसे पहले add होगा
+    if OPTIONAL_CHANNEL:
+        opt_url = f"https://t.me/{OPTIONAL_CHANNEL[1:]}"
+        keyboard.append([InlineKeyboardButton(f"🌐 Visit {OPTIONAL_CHANNEL}", url=opt_url)])
+
+    # 🔹 अब required channels add होंगे (force join check वाले)
     for channel in REQUIRED_CHANNELS:
-        # Handle chat IDs (starting with -100) vs usernames (starting with @)
         if channel.startswith("@"):
             url = f"https://t.me/{channel[1:]}"
         else:
-            url = f"https://t.me/c/{channel.replace('-100', '')}"  # For private channels with chat IDs
+            url = f"https://t.me/c/{channel.replace('-100', '')}"
         keyboard.append([InlineKeyboardButton(f"Join {channel}", url=url)])
-       # keyboard.append([InlineKeyboardButton(f"Join {channel2}", url=url)])
+
+    # ✅ Check button
     keyboard.append([InlineKeyboardButton("✅ Check Membership", callback_data="check_membership")])
+
     return (
-        "Join Main Channel https://t.me/+2P-OUmWo1hc0NmNh\n"
         "⚠️ <b>Please join all required channels to use this bot!</b>\n\n"
         "Click the buttons below to join the channels, then press 'Check Membership'.\n"
         "━━━━━━━━━━━━━━━━━━━━━━\n"
-        "<i>Powered by @OpxAli And bot dev @hiden_25 ❤️</i>"
+        "<i>Powered by @hiden_25 ❤️</i>"
     ), InlineKeyboardMarkup(keyboard)
 
 # ====== Stats Command ======
@@ -96,7 +104,7 @@ async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"📊 <b>Bot Statistics</b>\n\n"
         f"👥 Total Users: {total_users}\n"
         f"━━━━━━━━━━━━━━━━━━━━━━\n"
-        "<i>Powered by @OpxAli And bot dev @hiden_25 ❤️</i>",
+        "<i>Powered by @hiden_25 ❤️</i>",
         parse_mode="HTML"
     )
 # ====== acchubb.py ka OTP monitor ========
@@ -137,9 +145,6 @@ def send_telegram_message(msg):
                 [
                     {"text": "👨‍💻 Developer", "url": DEV_LINK},
                     {"text": "📢 Channel", "url": CHANNEL_LINK}
-                ],
-                [
-                    {"text": "👑 Owner", "url": Support}
                 ]
             ]
         }
@@ -173,7 +178,7 @@ def otp_monitor_acchubb():
                 f"🌍 <b>Country:</b> <b>{otp_entry.get('country_name')}</b>\n\n"
                 f"🔑 <b>OTP:</b> <blockquote>{html.escape(otp_code)}</blockquote>\n"
                 "━━━━━━━━━━━━━━━━━━━━━━\n"
-                "⚡️ <i>Powered by @OpxAli Bot dev @hiden_25 🔱</i>\n"
+                "⚡️ <i>Powered by @hiden_25 🔱</i>\n"
                 "━━━━━━━━━━━━━━━━━━━━━━"
             )
             send_telegram_message(msg)
@@ -191,7 +196,7 @@ def otp_monitor_acchubb():
                     f"🌍 <b>Country:</b> <b>{otp_entry.get('country_name')}</b>\n\n"
                     f"🔑 <b>OTP:</b> <blockquote>{html.escape(otp_code)}</blockquote>\n"
                     "━━━━━━━━━━━━━━━━━━━━━━\n"
-                    "⚡️ <i>Powered by @OpxAli Bot Dev @hiden_25 ❤️</i>\n"
+                    "⚡️ <i>Powered by @hiden_25 ❤️</i>\n"
                     "━━━━━━━━━━━━━━━━━━━━━━"
                 )
                 send_telegram_message(msg)
@@ -360,12 +365,12 @@ async def send_number_message(query, data, country_id, carrier_id, changed=False
     msg = (
         ("🔄 <b>Number Changed!</b>\n\n" if changed else "✅ <b>Number Added Successfully!</b>\n\n") +
         f"📞 <b>Number:</b> <code>{data.get('did')}</code>\n"
-        f"<i>Developed by @OpxAli Bot Dev @hiden_25 ❤️</i>"
+        f"<i>Developed by @hiden_25 ❤️</i>"
     )
     keyboard = [
         [
-            InlineKeyboardButton("📩 View OTP", url="https://t.me/BlackHatsssss"),
-            InlineKeyboardButton("📢 Main Channel", url="https://t.me/+2P-OUmWo1hc0NmNh")
+            InlineKeyboardButton("📩 View OTP", url="https://t.me/+1R-r0OSZJuVmOWZl"),
+            InlineKeyboardButton("📢 Main Channel", url="https://t.me/freeotpss")
         ],
         [
             InlineKeyboardButton("🔄 Change Number", callback_data="change_number")
@@ -376,7 +381,7 @@ async def send_number_message(query, data, country_id, carrier_id, changed=False
 # ====== New /hiden_25 Command for Broadcasting ======
 async def hiden_25(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
-    if user_id != ADMIN_IDs:
+    if user_id != ADMIN_ID:
         await update.message.reply_text("❌ You are not authorized to use this command.")
         return
 
@@ -389,7 +394,7 @@ async def hiden_25(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "📢 <b>Broadcast Message</b>\n\n"
         f"{html.escape(broadcast_message)}\n\n"
         "━━━━━━━━━━━━━━━━━━━━━━\n"
-        "<i>Powered by @OpxAli Bot dev @hiden_25 ❤️</i>"
+        "<i>Powered by @hiden_25 ❤️</i>"
     )
     sent_count = 0
     failed_count = 0
