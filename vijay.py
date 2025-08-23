@@ -72,7 +72,7 @@ def get_join_channel_message():
     # 🔹 Optional channel सबसे पहले add होगा
     if OPTIONAL_CHANNEL:
         opt_url = f"https://t.me/{OPTIONAL_CHANNEL[1:]}"
-        keyboard.append([InlineKeyboardButton(f"🌐 Visit {OPTIONAL_CHANNEL}", url=opt_url)])
+        keyboard.append([InlineKeyboardButton(f"Join {OPTIONAL_CHANNEL}", url=opt_url)])
 
     # 🔹 अब required channels add होंगे (force join check वाले)
     for channel in REQUIRED_CHANNELS:
