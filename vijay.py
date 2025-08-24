@@ -29,13 +29,13 @@ REQUIRED_CHANNELS = [
     #"@+2P-OUmWo1hc0NmNh",
    # "@fasttech3",
     "@h2icoder",
+    "@freeotpsss",
     "@freeotpss"
 ]
 # Optional channel (just link, no force check)
-OPTIONAL_CHANNELS = [
-    "@+cJJcOipvAohmODBl",
-    "@+AT1tP1OEpmkwZTI1"
-]
+OPTIONAL_CHANNELS = "@+cJJcOipvAohmODBl"
+   # "@+AT1tP1OEpmkwZTI1"
+#]
 
 #channel2 = [ "@+F4Md7IotaqcxN2I9" ]
 # Store user IDs who have started the bot
