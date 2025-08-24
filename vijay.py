@@ -72,13 +72,10 @@ async def check_membership(user_id, context: ContextTypes.DEFAULT_TYPE):
 def get_join_channel_message():
     keyboard = []
 
-    # 🔹 Optional channels सबसे पहले add होंगे
-    for opt_channel in OPTIONAL_CHANNELS:
-        if opt_channel.startswith("@"):
-            opt_url = f"https://t.me/{opt_channel[1:]}"
-        else:
-            opt_url = f"https://t.me/c/{opt_channel.replace('-100', '')}"
-        keyboard.append([InlineKeyboardButton(f"Join {opt_channel}", url=opt_url)])
+    # 🔹 Optional channel सबसे पहले add होगा
+    if OPTIONAL_CHANNEL:
+        opt_url = f"https://t.me/{OPTIONAL_CHANNEL[1:]}"
+        keyboard.append([InlineKeyboardButton(f"🌐 Visit {OPTIONAL_CHANNEL}", url=opt_url)])
 
     # 🔹 अब required channels add होंगे (force join check वाले)
     for channel in REQUIRED_CHANNELS:
@@ -97,7 +94,6 @@ def get_join_channel_message():
         "━━━━━━━━━━━━━━━━━━━━━━\n"
         "<i>Powered by @hiden_25 ❤️</i>"
     ), InlineKeyboardMarkup(keyboard)
-
 # ====== Stats Command ======
 async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
