@@ -33,7 +33,7 @@ REQUIRED_CHANNELS = [
     "@freeotpss"
 ]
 # Optional channel (just link, no force check)
-OPTIONAL_CHANNELS = "@+cJJcOipvAohmODBl"
+OPTIONAL_CHANNEL = "@+cJJcOipvAohmODBl"
    # "@+AT1tP1OEpmkwZTI1"
 #]
 
