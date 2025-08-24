@@ -32,7 +32,11 @@ REQUIRED_CHANNELS = [
     "@freeotpss"
 ]
 # Optional channel (just link, no force check)
-OPTIONAL_CHANNEL = "@+cJJcOipvAohmODBl"
+OPTIONAL_CHANNEL = [
+    "@+cJJcOipvAohmODBl",
+    "@+AT1tP1OEpmkwZTI1"
+]
+
 #channel2 = [ "@+F4Md7IotaqcxN2I9" ]
 # Store user IDs who have started the bot
 USER_IDS = set()
